@@ -1,0 +1,4 @@
+rootProject.name = 'todo-app-cqrs-es-demo'
+
+include 'write-app'
+include 'read-app'
