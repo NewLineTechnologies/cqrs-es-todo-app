@@ -1,0 +1,13 @@
+FROM gradle:alpine
+USER root
+
+WORKDIR /app
+COPY . /app
+
+ENV GRADLE_OPTS -Dorg.gradle.daemon=false
+
+VOLUME /gradle
+
+EXPOSE 8080
+
+ENTRYPOINT gradle -g /gradle clean bootRun
