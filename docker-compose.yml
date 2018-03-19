@@ -1,0 +1,21 @@
+version: "3.3"
+
+services:
+  write-app:
+      build:
+        context: ./write-app
+        dockerfile: Dockerfile.dummy
+      ports:
+        - 8088:8088
+      volumes:
+        - $HOME/gradle_cache:/gradle
+      depends_on:
+        - event-store
+      network_mode: "host"
+
+  event-store:
+    image: eventstore/eventstore
+    ports:
+      - 1113:1113
+      - 2113:2113
+    network_mode: "host"
