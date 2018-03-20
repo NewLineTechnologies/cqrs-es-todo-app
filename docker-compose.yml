@@ -9,7 +9,7 @@ services:
     ports:
       - 8088:8088
     volumes:
-      - $HOME/gradle_cache:/gradle
+      - $HOME/todo_app/gradle_cache:/gradle
     depends_on:
       - event-store
     network_mode: "host"
@@ -19,6 +19,8 @@ services:
     ports:
       - 1113:1113
       - 2113:2113
+    volumes:
+      - $HOME/todo_app/event_store:/var/lib/eventstore
     network_mode: "host"
 
   read-app:
@@ -29,7 +31,7 @@ services:
     ports:
       - 8080:8080
     volumes:
-      - $HOME/gradle_cache:/gradle
+      - $HOME/todo_app/gradle_cache:/gradle
     depends_on:
       - event-store
     network_mode: "host"
@@ -39,4 +41,6 @@ services:
     image: mongo
     ports:
       - 27017:27017
+    volumes:
+      - $HOME/todo_app/mongo:/data/db
     network_mode: "host"
