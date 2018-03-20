@@ -1,0 +1,16 @@
+package net.nlt.cqrsesdemo.todoapp.domain.events.todo;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class TodoCompletedEvent extends BaseTodoEvent {
+
+    public TodoCompletedEvent() {
+    }
+
+    public TodoCompletedEvent(String id) {
+        super(id, TodoEventType.COMPLETED);
+    }
+}

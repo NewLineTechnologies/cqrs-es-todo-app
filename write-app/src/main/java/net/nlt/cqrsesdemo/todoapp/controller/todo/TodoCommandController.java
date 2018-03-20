@@ -5,10 +5,7 @@ import net.nlt.cqrsesdemo.todoapp.dto.todo.CreateTodo;
 import net.nlt.cqrsesdemo.todoapp.dto.todo.UpdateTodo;
 import net.nlt.cqrsesdemo.todoapp.service.TodoCommandService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class TodoCommandController extends BaseCommandController {
@@ -24,5 +21,10 @@ public class TodoCommandController extends BaseCommandController {
     @PutMapping(path = "/todo")
     public void updateTodo(@RequestBody UpdateTodo updateTodo) {
         todoCommandService.updateTodo(updateTodo);
+    }
+
+    @PatchMapping(path = "/todo/{todoId}")
+    public void completeTodo(@PathVariable String todoId) {
+        todoCommandService.completeTodo(todoId);
     }
 }

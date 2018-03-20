@@ -8,4 +8,6 @@ public interface TodoCommandService {
     void createTodo(CreateTodo createTodo);
 
     void updateTodo(UpdateTodo updateTodo);
+
+    void completeTodo(String todoId);
 }

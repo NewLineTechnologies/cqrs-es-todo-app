@@ -6,7 +6,8 @@ import lombok.Getter;
 public enum TodoEventType {
 
     CREATED("Created"),
-    UPDATED("Updated");
+    UPDATED("Updated"),
+    COMPLETED("Completed");
 
     private String value;
 

@@ -4,6 +4,7 @@ import com.github.msemys.esjc.*;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import net.nlt.cqrsesdemo.todoapp.domain.document.todo.TodoDocument;
+import net.nlt.cqrsesdemo.todoapp.domain.events.todo.TodoCompletedEvent;
 import net.nlt.cqrsesdemo.todoapp.domain.events.todo.TodoCreatedEvent;
 import net.nlt.cqrsesdemo.todoapp.domain.events.todo.TodoEventType;
 import net.nlt.cqrsesdemo.todoapp.domain.events.todo.TodoUpdatedEvent;
@@ -70,7 +71,25 @@ public class TodoEventHandler extends BaseEventHandler<TodoDocument> {
             case UPDATED:
                 handleUpdateTodoEvent(event);
                 break;
+
+            case COMPLETED:
+                handleTodoCompletedEvent(event);
+                break;
+
+            default:
+                log.error("There is no handler for [Todo {} event]", type.toString());
         }
+    }
+
+    @SneakyThrows
+    private void handleTodoCompletedEvent(RecordedEvent event) {
+        TodoCompletedEvent tce = objectMapper.readValue(event.data, TodoCompletedEvent.class);
+        todoRepository.findById(tce.getId()).ifPresent(todoDoc -> {
+            todoDoc.setCompleted(true);
+            todoRepository.save(todoDoc);
+
+            log.info("{} handled", tce.description());
+        });
     }
 
     @SneakyThrows
