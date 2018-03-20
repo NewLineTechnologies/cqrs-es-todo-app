@@ -5,7 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.msemys.esjc.EventData;
 import com.github.msemys.esjc.EventStore;
 import lombok.extern.slf4j.Slf4j;
-import net.nlt.cqrsesdemo.todoapp.domain.events.TodoCreatedEvent;
+import net.nlt.cqrsesdemo.todoapp.domain.events.BaseEvent;
+import net.nlt.cqrsesdemo.todoapp.domain.events.todo.BaseTodoEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +15,7 @@ import static com.github.msemys.esjc.ExpectedVersion.ANY;
 
 @Slf4j
 @Repository
-public class GregYoungTodoEventStore implements TodoEventStore {
+public class GregYoungEventStore implements EventStoreRepository {
 
     private final static String TODO_STREAM_NAME = "todo";
 
@@ -25,12 +26,12 @@ public class GregYoungTodoEventStore implements TodoEventStore {
     private ObjectMapper objectMapper;
 
     @Override
-    public void saveTodoCreatedEvent(TodoCreatedEvent event) {
+    public void saveTodoEvent(BaseTodoEvent event) {
         eventStore.appendToStream(TODO_STREAM_NAME, ANY, convertToEventData(event));
-        log.info("[created Todo event] pushed to event store");
+        log.info("{} pushed to event store", event.description());
     }
 
-    private EventData convertToEventData(TodoCreatedEvent event) {
+    private EventData convertToEventData(BaseEvent event) {
         try {
             return newBuilder()
                     .type("created")

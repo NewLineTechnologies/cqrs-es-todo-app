@@ -3,8 +3,9 @@ version: "3.3"
 services:
   write-app:
     build:
-      context: ./write-app
-      dockerfile: Dockerfile.dummy
+      context: .
+      dockerfile: write-app/Dockerfile.dummy
+    command: gradle -g /gradle clean build :write-app:bootRun
     ports:
       - 8088:8088
     volumes:
@@ -22,8 +23,9 @@ services:
 
   read-app:
     build:
-      context: ./read-app
-      dockerfile: Dockerfile.dummy
+      context: .
+      dockerfile: read-app/Dockerfile.dummy
+    command: gradle -g /gradle clean build :read-app:bootRun
     ports:
       - 8080:8080
     volumes:
@@ -32,7 +34,7 @@ services:
       - event-store
     network_mode: "host"
 
-# read db
+  # read db
   mongo-db:
     image: mongo
     ports:

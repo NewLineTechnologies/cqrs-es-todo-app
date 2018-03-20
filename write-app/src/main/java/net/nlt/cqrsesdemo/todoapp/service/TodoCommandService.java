@@ -1,10 +1,11 @@
 package net.nlt.cqrsesdemo.todoapp.service;
 
-import net.nlt.cqrsesdemo.todoapp.domain.Todo;
+import net.nlt.cqrsesdemo.todoapp.dto.todo.CreateTodo;
+import net.nlt.cqrsesdemo.todoapp.dto.todo.UpdateTodo;
 
 public interface TodoCommandService {
 
-    void createTodo(Todo todo);
+    void createTodo(CreateTodo createTodo);
 
-    void updateTodo(Todo todo);
+    void updateTodo(UpdateTodo updateTodo);
 }
