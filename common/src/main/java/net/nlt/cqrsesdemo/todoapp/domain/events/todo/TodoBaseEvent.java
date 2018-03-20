@@ -6,18 +6,18 @@ import net.nlt.cqrsesdemo.todoapp.domain.events.BaseEvent;
 
 @Getter
 @Setter
-public abstract class BaseTodoEvent extends BaseEvent {
+public abstract class TodoBaseEvent extends BaseEvent {
 
     private TodoEventType eventType;
 
-    public BaseTodoEvent() {
+    public TodoBaseEvent() {
     }
 
-    BaseTodoEvent(TodoEventType eventType) {
+    TodoBaseEvent(TodoEventType eventType) {
         this.eventType = eventType;
     }
 
-    BaseTodoEvent(String id, TodoEventType eventType) {
+    TodoBaseEvent(String id, TodoEventType eventType) {
         super(id);
         this.eventType = eventType;
     }

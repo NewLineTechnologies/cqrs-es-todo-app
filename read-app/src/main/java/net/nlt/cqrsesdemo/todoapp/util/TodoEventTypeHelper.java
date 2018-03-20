@@ -9,7 +9,4 @@ import net.nlt.cqrsesdemo.todoapp.domain.events.todo.TodoEventType;
 public class TodoEventTypeHelper {
 
     private TodoEventType eventType;
-
-    public TodoEventTypeHelper() {
-    }
 }

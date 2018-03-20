@@ -1,4 +1,4 @@
-package net.nlt.cqrsesdemo.todoapp.service.handler.todo;
+package net.nlt.cqrsesdemo.todoapp.service.handler;
 
 import com.github.msemys.esjc.*;
 import lombok.SneakyThrows;
@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import net.nlt.cqrsesdemo.todoapp.domain.document.todo.TodoDocument;
 import net.nlt.cqrsesdemo.todoapp.domain.events.todo.*;
 import net.nlt.cqrsesdemo.todoapp.repository.TodoRepository;
-import net.nlt.cqrsesdemo.todoapp.service.handler.BaseEventHandler;
 import net.nlt.cqrsesdemo.todoapp.util.TodoEventTypeHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +16,7 @@ import java.util.concurrent.CompletableFuture;
 
 @Slf4j
 @Service
-public class TodoEventHandler extends BaseEventHandler<TodoDocument> {
+public class TodoEventHandler extends BaseEventHandler {
 
     private final static String STREAM_NAME = "todo";
 
@@ -25,10 +24,6 @@ public class TodoEventHandler extends BaseEventHandler<TodoDocument> {
     private TodoRepository todoRepository;
 
     private CompletableFuture<Subscription> todoSubscription;
-
-    public TodoEventHandler() {
-        super(TodoDocument.class);
-    }
 
     @PostConstruct
     public void subscribe() {
@@ -58,7 +53,7 @@ public class TodoEventHandler extends BaseEventHandler<TodoDocument> {
 
     @SneakyThrows
     private void handleTodoEvent(RecordedEvent event) {
-        TodoEventType type = extractType(event);
+        TodoEventType type = extractType(event, TodoEventTypeHelper.class).getEventType();
 
         switch (type) {
             case CREATED:
@@ -124,10 +119,5 @@ public class TodoEventHandler extends BaseEventHandler<TodoDocument> {
         todoRepository.save(todoDoc);
 
         log.info("{} handled", todoUpdatedEvent.description());
-    }
-
-    @SneakyThrows
-    private TodoEventType extractType(RecordedEvent event) {
-        return objectMapper.readValue(new String(event.data), TodoEventTypeHelper.class).getEventType();
     }
 }

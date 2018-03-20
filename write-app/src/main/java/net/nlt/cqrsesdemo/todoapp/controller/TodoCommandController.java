@@ -1,6 +1,5 @@
-package net.nlt.cqrsesdemo.todoapp.controller.todo;
+package net.nlt.cqrsesdemo.todoapp.controller;
 
-import net.nlt.cqrsesdemo.todoapp.controller.BaseCommandController;
 import net.nlt.cqrsesdemo.todoapp.dto.todo.CreateTodo;
 import net.nlt.cqrsesdemo.todoapp.dto.todo.UpdateTodo;
 import net.nlt.cqrsesdemo.todoapp.service.TodoCommandService;
