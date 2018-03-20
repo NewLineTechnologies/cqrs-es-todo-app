@@ -7,7 +7,7 @@ import static java.util.UUID.randomUUID;
 
 @Getter
 @Setter
-public class TodoCreatedEvent extends BaseTodoEvent {
+public class TodoCreatedEvent extends TodoBaseEvent {
 
     private String task;
     private Boolean completed;

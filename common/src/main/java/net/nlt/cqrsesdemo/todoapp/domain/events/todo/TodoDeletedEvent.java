@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class TodoDeletedEvent extends BaseTodoEvent {
+public class TodoDeletedEvent extends TodoBaseEvent {
 
     public TodoDeletedEvent() {
     }
