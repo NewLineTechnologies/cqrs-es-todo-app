@@ -1,0 +1,46 @@
+version: "3.3"
+
+services:
+  write-app:
+    build:
+      context: .
+      dockerfile: write-app/Dockerfile.dummy
+    command: gradle -g /gradle clean build :write-app:bootRun
+    ports:
+      - 8088:8088
+    volumes:
+      - $HOME/todo_app/gradle_cache:/gradle
+    depends_on:
+      - event-store
+    network_mode: "host"
+
+  event-store:
+    image: eventstore/eventstore
+    ports:
+      - 1113:1113
+      - 2113:2113
+    volumes:
+      - $HOME/todo_app/event_store:/var/lib/eventstore
+    network_mode: "host"
+
+#  read-app:
+#    build:
+#      context: .
+#      dockerfile: read-app/Dockerfile.dummy
+#    command: gradle -g /gradle clean build :read-app:bootRun
+#    ports:
+#      - 8080:8080
+#    volumes:
+#      - $HOME/todo_app/gradle_cache:/gradle
+#    depends_on:
+#      - event-store
+#    network_mode: "host"
+
+  # read db
+  mongo-db:
+    image: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - $HOME/todo_app/mongo:/data/db
+    network_mode: "host"
