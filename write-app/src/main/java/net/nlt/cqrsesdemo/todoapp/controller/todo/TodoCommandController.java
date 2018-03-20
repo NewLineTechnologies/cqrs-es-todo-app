@@ -27,4 +27,9 @@ public class TodoCommandController extends BaseCommandController {
     public void completeTodo(@PathVariable String todoId) {
         todoCommandService.completeTodo(todoId);
     }
+
+    @DeleteMapping(path = "/todo/{todoId}")
+    public void deleteTodo(@PathVariable String todoId) {
+        todoCommandService.deleteTodo(todoId);
+    }
 }

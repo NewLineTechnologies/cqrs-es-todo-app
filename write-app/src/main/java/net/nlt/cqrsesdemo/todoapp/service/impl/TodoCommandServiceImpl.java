@@ -3,6 +3,7 @@ package net.nlt.cqrsesdemo.todoapp.service.impl;
 import lombok.extern.slf4j.Slf4j;
 import net.nlt.cqrsesdemo.todoapp.domain.events.todo.TodoCompletedEvent;
 import net.nlt.cqrsesdemo.todoapp.domain.events.todo.TodoCreatedEvent;
+import net.nlt.cqrsesdemo.todoapp.domain.events.todo.TodoDeletedEvent;
 import net.nlt.cqrsesdemo.todoapp.domain.events.todo.TodoUpdatedEvent;
 import net.nlt.cqrsesdemo.todoapp.dto.todo.CreateTodo;
 import net.nlt.cqrsesdemo.todoapp.dto.todo.UpdateTodo;
@@ -31,5 +32,10 @@ public class TodoCommandServiceImpl implements TodoCommandService {
     @Override
     public void completeTodo(String todoId) {
         eventStore.saveTodoEvent(new TodoCompletedEvent(todoId));
+    }
+
+    @Override
+    public void deleteTodo(String todoId) {
+        eventStore.saveTodoEvent(new TodoDeletedEvent(todoId));
     }
 }

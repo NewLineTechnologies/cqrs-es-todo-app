@@ -10,4 +10,6 @@ public interface TodoCommandService {
     void updateTodo(UpdateTodo updateTodo);
 
     void completeTodo(String todoId);
+
+    void deleteTodo(String todoId);
 }

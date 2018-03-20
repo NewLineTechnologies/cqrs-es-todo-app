@@ -4,10 +4,7 @@ import com.github.msemys.esjc.*;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import net.nlt.cqrsesdemo.todoapp.domain.document.todo.TodoDocument;
-import net.nlt.cqrsesdemo.todoapp.domain.events.todo.TodoCompletedEvent;
-import net.nlt.cqrsesdemo.todoapp.domain.events.todo.TodoCreatedEvent;
-import net.nlt.cqrsesdemo.todoapp.domain.events.todo.TodoEventType;
-import net.nlt.cqrsesdemo.todoapp.domain.events.todo.TodoUpdatedEvent;
+import net.nlt.cqrsesdemo.todoapp.domain.events.todo.*;
 import net.nlt.cqrsesdemo.todoapp.repository.TodoRepository;
 import net.nlt.cqrsesdemo.todoapp.service.handler.BaseEventHandler;
 import net.nlt.cqrsesdemo.todoapp.util.TodoEventTypeHelper;
@@ -76,9 +73,21 @@ public class TodoEventHandler extends BaseEventHandler<TodoDocument> {
                 handleTodoCompletedEvent(event);
                 break;
 
+            case DELETED:
+                handleTodoDeletedEvent(event);
+                break;
+
             default:
                 log.error("There is no handler for [Todo {} event]", type.toString());
         }
+    }
+
+    @SneakyThrows
+    private void handleTodoDeletedEvent(RecordedEvent event) {
+        TodoDeletedEvent tde = objectMapper.readValue(event.data, TodoDeletedEvent.class);
+        todoRepository.deleteById(tde.getId());
+
+        log.info("{} handled", tde.description());
     }
 
     @SneakyThrows

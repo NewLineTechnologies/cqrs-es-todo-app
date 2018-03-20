@@ -7,7 +7,8 @@ public enum TodoEventType {
 
     CREATED("Created"),
     UPDATED("Updated"),
-    COMPLETED("Completed");
+    COMPLETED("Completed"),
+    DELETED("Deleted");
 
     private String value;
 
