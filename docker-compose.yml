@@ -23,18 +23,18 @@ services:
       - $HOME/todo_app/event_store:/var/lib/eventstore
     network_mode: "host"
 
-#  read-app:
-#    build:
-#      context: .
-#      dockerfile: read-app/Dockerfile.dummy
-#    command: gradle -g /gradle clean build :read-app:bootRun
-#    ports:
-#      - 8080:8080
-#    volumes:
-#      - $HOME/todo_app/gradle_cache:/gradle
-#    depends_on:
-#      - event-store
-#    network_mode: "host"
+  read-app:
+    build:
+      context: .
+      dockerfile: read-app/Dockerfile.dummy
+    command: gradle -g /gradle clean build :read-app:bootRun
+    ports:
+      - 8080:8080
+    volumes:
+      - $HOME/todo_app/gradle_cache:/gradle
+    depends_on:
+      - event-store
+    network_mode: "host"
 
   # read db
   mongo-db:
